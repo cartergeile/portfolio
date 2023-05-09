@@ -14,11 +14,11 @@
             <nav>
                 <img src="images/logo.webp" class="logo">
                 <ul id="sidemenu">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Portfolio</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#header">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
                 </ul>
                 <i class="fa-solid fa-bars" onclick="openmenu()"></i>
@@ -74,18 +74,18 @@
         <h1 class="sub-title">My Services</h1>
         <div class="projects-list">
             <div>
-                <h2>Service 1</h2>
-                <p>little description</p>
+                <h2>Web Design</h2>
+                <p>Creating the design and layout of a website.</p>
                 <a href="#">Learn More</a>
             </div>
             <div>
-                <h2>Service 2</h2>
-                <p>little description</p>
+                <h2>UI/UX Design</h2>
+                <p>Design focused on the interaction that a human user has with everyday products and services.</p>
                 <a href="#">Learn More</a>
             </div>
             <div>
-                <h2>Service 3</h2>
-                <p>little descriptiom</p>
+                <h2>App Design</h2>
+                <p>Creating the design and layout of an Andriod/iOS app.</p>
                 <a href="#">Learn More</a>
             </div>
         </div>
@@ -139,12 +139,13 @@
                 <a href="Resume - Carter Geile (1).pdf" download class="btn btn2">Download Resume</a>
             </div>
             <div class="contact-right">
-                <form>
+                <form name="submit-to-google-sheet">
                     <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
+                    <input type="email" name="Email" placeholder="Your Email" required>
                     <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
                     <button type="submit" class="btn btn2">Submit</button>
                 </form>
+                <span id="msg"></span>
             </div>
         </div>
     </div>
@@ -156,5 +157,29 @@
 
 <script src="script.js"></script>
 
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw-j0BdEH0ZMu8jVZ2trJ4pdcSVci1x0BAsXkawTXGVbwPJgJPW3t7OltpQeuMj3LAC1Q/exec'
+    const form = document.forms['submit-to-google-sheet']
+    const msg = document.getElementById("msg")
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                msg.innerHTML = "Message sent successfully!"
+                setTimeout(function(){
+                    msg.innerHTML = ""
+                }, 5000)
+                form.reset()
+            })
+            .catch(error => {
+                msg.innerHTML = "Something went wrong, please try again!"
+                setTimeout(function(){
+                    msg.innerHTML = ""
+                }, 5000)
+                form.reset()
+            })
+    })
+</script>
 </body>
 </html>
